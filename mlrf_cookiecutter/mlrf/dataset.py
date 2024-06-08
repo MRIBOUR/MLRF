@@ -1,6 +1,9 @@
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
+from find_cifar import find_cifar
+
+find_cifar()
 
 # Function to load a batch
 def load_cifar10_batch(file):
@@ -11,8 +14,11 @@ def load_cifar10_batch(file):
 # Load all batches
 data_batches = []
 labels_batches = []
+
+dataset_path = find_cifar()
+
 for i in range(1, 6):
-    batch = load_cifar10_batch(f"C:\\Users\\User\\OneDrive\\Bureau\\SCIA-G\\MLRF\\MLRF\\mlrf_cookiecutter\\data\\cifar-10-batches-py\\data_batch_{i}")
+    batch = load_cifar10_batch(dataset_path / f'data_batch_{i}')
     data_batches.append(batch[b'data'])
     labels_batches.append(batch[b'labels'])
 
@@ -20,7 +26,7 @@ X_train = np.concatenate(data_batches)
 y_train = np.concatenate(labels_batches)
 
 # Load test batch
-test_batch = load_cifar10_batch("C:\\Users\\User\\OneDrive\\Bureau\\SCIA-G\\MLRF\\MLRF\\mlrf_cookiecutter\\data\\cifar-10-batches-py\\test_batch")
+test_batch = load_cifar10_batch(dataset_path / 'test_batch')
 X_test = test_batch[b'data']
 y_test = test_batch[b'labels']
 
