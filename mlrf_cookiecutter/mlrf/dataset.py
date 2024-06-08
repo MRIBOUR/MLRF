@@ -1,12 +1,6 @@
-import tarfile
 import pickle
-import os
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
-
-extracted_path = 'cifar-10-batches-py'
-
 
 # Function to load a batch
 def load_cifar10_batch(file):
@@ -25,7 +19,15 @@ for i in range(1, 6):
 X_train = np.concatenate(data_batches)
 y_train = np.concatenate(labels_batches)
 
+# Load test batch
 test_batch = load_cifar10_batch("C:\\Users\\User\\OneDrive\\Bureau\\SCIA-G\\MLRF\\MLRF\\mlrf_cookiecutter\\data\\cifar-10-batches-py\\test_batch")
+X_test = test_batch[b'data']
+y_test = test_batch[b'labels']
+
+X_train = np.concatenate(data_batches)
+y_train = np.concatenate(labels_batches)
+
+# Load test batch
 X_test = test_batch[b'data']
 y_test = test_batch[b'labels']
 
@@ -33,29 +35,20 @@ y_test = test_batch[b'labels']
 X_train = X_train.reshape((len(X_train), 3, 32, 32)).transpose(0, 2, 3, 1)
 X_test = X_test.reshape((len(X_test), 3, 32, 32)).transpose(0, 2, 3, 1)
 
-X_combined = np.concatenate((X_train, X_test))
-y_combined = np.concatenate((y_train, y_test))
-
+# CIFAR-10 labels
 cifar10_labels = [
     'airplane', 'automobile', 'bird', 'cat', 'deer',
     'dog', 'frog', 'horse', 'ship', 'truck'
 ]
 
-# Convert to pandas DataFrame
-df = pd.DataFrame({
-    'image': list(X_combined),
-    'label': [cifar10_labels[label] for label in y_combined]
-})
-
-# plot images
-def plot_images_from_df(df, n=10):
+def plot_cifar10_images(images, labels, n=10):
     plt.figure(figsize=(15, 5))
     for i in range(n):
         plt.subplot(2, n // 2, i + 1)
-        plt.imshow(df['image'].iloc[i])
-        plt.title(df['label'].iloc[i])
+        plt.imshow(images[i])
+        plt.title(cifar10_labels[labels[i]])
         plt.axis('off')
     plt.show()
 
-# Display first 10 images from the DataFrame
-plot_images_from_df(df)
+# Display first 10 images from the training set
+plot_cifar10_images(X_train, y_train)
