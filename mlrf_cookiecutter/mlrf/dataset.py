@@ -58,3 +58,5 @@ def plot_cifar10_images(images, labels, n=10):
 
 # Display first 10 images from the training set
 plot_cifar10_images(X_train, y_train)
+
+
