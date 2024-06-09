@@ -5,8 +5,6 @@ from find_cifar import find_cifar
 from sklearn import svm
 from sklearn.metrics import accuracy_score
 
-find_cifar()
-
 # Function to load a batch
 def load_cifar10_batch(file):
     with open(file, 'rb') as fo:
