@@ -5,7 +5,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-class BoVW:
+class BoVWFE:
     def __init__(self, data, kmeans_clusters=10):
         """
         Initializes the Bag of Visual Words (BoVW) class with input data.
@@ -19,6 +19,7 @@ class BoVW:
         logger.info('Created SIFT')
 
         self._descriptors = []
+        self._keypoints = []
         self._get_img_descriptors()
         logger.info('Computed Descriptors')
 
@@ -31,15 +32,17 @@ class BoVW:
         Computes SIFT descriptors for each image in the dataset and stores them.
         
         This method processes each image to extract its SIFT keypoints and descriptors,
-        appending the descriptors to the `_descriptors` list.
+        appending the descriptors and keypoints to their respective lists.
         """
         for img in self._data:
-            _, descriptors = self._sift.detectAndCompute(img, None)
+            keypoints, descriptors = self._sift.detectAndCompute(img, None)
             
             if descriptors is not None:
                 self._descriptors.append(descriptors)
+                self._keypoints.append(keypoints)
             else:
                 self._descriptors.append([])
+                self._keypoints.append([])
 
     def _train_kmeans(self, kmeans_clusters):
         """
@@ -81,3 +84,25 @@ class BoVW:
         
         logger.info('Transformed Features into Histograms')
         return np.array(histograms)
+
+    def draw_keypoints(self):
+        """
+        Draws the SIFT keypoints on each image and returns the images with keypoints.
+        
+        This method uses the stored keypoints to draw them on the original images.
+        
+        Returns:
+        - List of images with SIFT keypoints drawn on them.
+        """
+        images_with_keypoints = []
+        
+        for img, keypoints in zip(self._data, self._keypoints):
+            if keypoints:
+                img_with_keypoints = cv2.drawKeypoints(img, keypoints, None, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+            else:
+                img_with_keypoints = img.copy()  # No keypoints, return original image
+                
+            images_with_keypoints.append(img_with_keypoints)
+        
+        logger.info('Keypoints drawn on images')
+        return images_with_keypoints

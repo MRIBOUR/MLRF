@@ -5,7 +5,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-class HoG:
+class HoGFE:
     def __init__(self, data):
         """
         Initializes the HoG class with input data.
@@ -59,10 +59,10 @@ class HoG:
         Returns the transformed images showing HoG visualizations.
         
         Returns:
-        - list: List of HoG visualized images.
+        - np.ndarray: Array of HoG visualized images.
         """
         if not self._tdata:
             logger.info('No gradients found, executing gradient detection')
             self.get_features()
 
-        return self._tdata
+        return np.array(self._tdata)
