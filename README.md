@@ -10,7 +10,7 @@ To use the library, use the following steps:
 -    Download this folder from it's [GitHub page](https://github.com/MRIBOUR/MLRF)
 -    Download the CIFAR-10 dataset from this [Link](http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz)
 -    Place the dataset in a data folder in the project on the same level as this file (path should be: mlrf/data/cifar-10-batches-py/)
--    You should now create a python environment to use the library, and execute the command 'pip install .' inside it. If you are using linux, you can use the command 'make create_environment' to execute this step.
+-    You should now create a python environment in the git folder to use the library, and execute the command 'pip install .' inside it. If you are using linux, you can use the command 'make create_environment' to execute this step.
 -    Once you have your python environment, you can open the tutorial.ipynb in the notebook folder to get instructions on how to use the library.
 -    You also have multiple python scripts in the scripts folder to quickly train a model and test it's accuracy on a feature extractor.
 
