@@ -22,6 +22,6 @@ X_test_flatten = flatten_test.get_features()
 
 acc = SVC.test_accuracy(X_test_flatten, y_test)
 
-print('Parameters for SVC model with Histogram of Gradients feature extraction:')
+print('Parameters for SVC model with flattened images')
 print("{'kernel'='rbf', C=1.0}")
 print(f'Model accuracy: {round(acc * 100, 2)}%')
