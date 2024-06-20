@@ -14,19 +14,14 @@ X_train, y_train, X_test, y_test = mlrf.cifar_utils.load_cifar()
 flatten = FlattenFE(X_train)
 X_train_flatten = flatten.get_features()
 
-LogReg = LogisticRegressionModel()
-param_grid = {
-    'penalty': ['l1', 'l2'],
-    'C': [0.1, 1, 10],
-    'solver': ['lbfgs', 'sag', 'saga']
-}
-best_params = LogReg.grid_search_CV(param_grid, X_train_flatten, y_train)
+LogReg = LogisticRegressionModel(C=10, penalty='l2', solver='saga')
+best_params = LogReg.fit(X_train_flatten, y_train)
 
 flatten_test = FlattenFE(X_test)
 X_test_flatten = flatten_test.get_features()
 
 acc = LogReg.test_accuracy(X_test_flatten, y_test)
 
-print('Best Parameters for Logistic Regression model with BoVW feature extraction:')
-print(best_params)
+print('Best Parameters for Logistic Regression model with flattened images')
+print("{'C': 10, 'penalty': 'l2', 'solver': 'saga'}")
 print(f'Model accuracy: {round(acc * 100, 2)}%')
